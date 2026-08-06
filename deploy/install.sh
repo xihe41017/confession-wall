@@ -28,8 +28,8 @@ CONF_DIR="$BASE/$CONF_REPO"
 RADIO_DIR="$BASE/$RADIO_REPO"
 DOMAIN="${DOMAIN:-_}"
 
-# 生成随机密码/密钥
-rand() { head -c 24 /dev/urandom | base64 | tr -dc 'a-zA-Z0-9' | head -c "${1:-18}"; }
+# 生成随机密码/密钥（|| true 避免 pipefail 下 head 提前退出触发 SIGPIPE）
+rand() { head -c 48 /dev/urandom | base64 | tr -dc 'a-zA-Z0-9' | head -c "${1:-18}" || true; }
 ADMIN_PASSWORD="${ADMIN_PASSWORD:-$(rand)}"
 JWT_SECRET="${JWT_SECRET:-$(rand 32)$(rand 32)}"
 RADIO_ADMIN_PASSWORD="${RADIO_ADMIN_PASSWORD:-$(rand)}"
@@ -93,8 +93,8 @@ deploy_frontend() {
   local dir="$1"
   info "构建前端 $dir ..."
   cd "$dir/frontend"
-  npm install --silent --no-audit --no-fund >/dev/null 2>&1
-  npm run build >/dev/null
+  npm install --no-audit --no-fund
+  npm run build
 }
 
 info "========== 部署表白墙 =========="
