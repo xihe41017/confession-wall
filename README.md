@@ -61,7 +61,7 @@ bash -c "$(curl -sSL https://cdn.jsdelivr.net/gh/xihe41017/confession-wall@main/
 bash -c "$(curl -sSL https://raw.githubusercontent.com/xihe41017/confession-wall/main/deploy/install.sh)"
 ```
 
-脚本会自动：装依赖（Python/Node/ffmpeg）→ 拉取项目 → 构建 → 生成管理员密码 → 注册 systemd 守护进程（开机自启）→ 可选 Nginx 反代。支持 Ubuntu / Debian / CentOS。
+脚本会自动：装依赖（Python/Node/ffmpeg）→ 拉取项目 → 构建 → 生成管理员密码 → 注册 systemd 守护进程（开机自启）→ 可选 Nginx 反代 → **配置每分钟自动更新**。支持 Ubuntu / Debian / CentOS。
 
 ```bash
 # 自定义端口 / 密码 / 域名（可选，不加则按提示输入）
