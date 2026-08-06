@@ -1,0 +1,17 @@
+# Python
+backend/.venv/
+__pycache__/
+*.pyc
+
+# 数据库、上传文件与日志（敏感数据不提交）
+backend/data/
+backend/*.log
+*.log
+
+# Node / 前端
+frontend/node_modules/
+frontend/dist/
+
+# 系统
+.DS_Store
+Thumbs.db

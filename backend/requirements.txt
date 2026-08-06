@@ -1,0 +1,8 @@
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+SQLAlchemy==2.0.36
+PyJWT==2.10.1
+slowapi==0.1.9
+python-multipart==0.0.20
+# 可选：服务器无 ffmpeg 时用于视频时长校验（pip install imageio-ffmpeg）
+# imageio-ffmpeg
