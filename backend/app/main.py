@@ -14,6 +14,7 @@ from app.middleware import RequestBodyLimitMiddleware
 from app.models import Setting, User  # noqa: F401  确保建表前已加载模型
 from app.ratelimit import limiter
 from app.routers import admin, auth, comments, media, posts, settings_admin, site, users
+from app.routers.auto_update import router as auto_update_router
 
 # 上传目录（图片/视频）
 from app.routers.media import UPLOAD_DIR
@@ -57,6 +58,8 @@ async def lifespan(app: FastAPI):
     db.commit()
     settings_service.warm(db)  # 把设置载入缓存，供限流器等无 db 场景读取
     db.close()
+    import app.auto_update as auto_update
+    auto_update.start_scheduler()  # 自动更新后台调度
     yield
 
 
@@ -83,6 +86,7 @@ app.include_router(media.router)
 app.include_router(admin.router)
 app.include_router(users.router)
 app.include_router(settings_admin.router)
+app.include_router(auto_update_router)
 
 # 上传文件静态托管
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)

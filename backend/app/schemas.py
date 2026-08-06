@@ -257,6 +257,20 @@ class SettingUpdate(BaseModel):
     value: str = Field(..., max_length=500)
 
 
+class AutoUpdateIn(BaseModel):
+    enabled: bool = False
+    interval: int = Field(5, ge=1, le=1440)
+
+
+class AutoUpdateOut(BaseModel):
+    enabled: bool = False
+    interval: int = 5
+    script_exists: bool = False
+    updating: bool = False
+    last_result: str = ""
+    last_run_at: Optional[float] = None
+
+
 class BanIPIn(BaseModel):
     ip: str
     reason: Optional[str] = Field(None, max_length=200)

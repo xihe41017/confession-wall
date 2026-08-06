@@ -29,6 +29,10 @@ class Settings:
     HOST = "0.0.0.0"
     PORT = int(os.getenv("PORT", "8000"))
 
+    # 自动更新（部署脚本会生成更新脚本；Windows 开发环境无此脚本则自动更新不可用）
+    UPDATE_SCRIPT = os.getenv("UPDATE_SCRIPT", "/usr/local/bin/campus-confession-update.sh")
+    UPDATE_STATE = os.getenv("UPDATE_STATE", "/var/log/campus-confession-update.state")
+
 
 settings = Settings()
 
@@ -52,6 +56,8 @@ DEFAULT_SETTINGS = [
     ("max_body_kb", "51200", "请求体大小上限(KB)，默认50MB", 1),
     ("image_max_mb", "2", "单张图片上传上限(MB，压缩后)", 1),
     ("video_max_mb", "15", "单个视频上传上限(MB)", 1),
+    ("auto_update_enabled", "0", "自动更新开关（仅超管）", 1),
+    ("auto_update_interval", "5", "自动更新检查间隔(分钟)（仅超管）", 1),
     ("jwt_secret", settings.JWT_SECRET, "JWT签名密钥（修改后所有人需重新登录）", 1),
 ]
 
