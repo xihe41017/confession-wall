@@ -49,7 +49,27 @@
 | 数据库 | SQLite（WAL 模式，零配置） |
 | 安全 | JWT · slowapi · PBKDF2 密码哈希 |
 
-## 🚀 快速开始
+## ⚡ 服务器一键部署（Linux）
+
+在全新 Linux 服务器上（需 root），一行命令即可同时部署**表白墙 + 点歌系统**：
+
+```bash
+bash -c "$(curl -sSL https://raw.githubusercontent.com/xihe41017/confession-wall/main/deploy/install.sh)"
+```
+
+脚本会自动：装依赖（Python/Node/ffmpeg/Nginx）→ 拉取两个项目 → 构建 → 生成管理员密码 → 注册 systemd 守护进程 → 配置 Nginx。支持 Ubuntu / Debian / CentOS。
+
+```bash
+# 自定义密码 / 域名（可选，不加则随机生成）
+ADMIN_PASSWORD='强密码' RADIO_ADMIN_PASSWORD='强密码' DOMAIN='你的域名' bash -c "$(curl -sSL ...)"
+```
+
+部署完成后：
+- 表白墙 → `http://服务器IP/`
+- 点歌台 → `http://服务器IP:8001/`
+- 密码在脚本输出末尾，请立即保存
+
+## 🚀 本地快速开始
 
 需要 Python 3.10+ 和 Node.js 18+。
 
