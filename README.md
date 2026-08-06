@@ -54,6 +54,10 @@
 在全新 Linux 服务器上（需 root），一行命令即可同时部署**表白墙 + 点歌系统**：
 
 ```bash
+# 国内服务器推荐（jsdelivr CDN 加速）
+bash -c "$(curl -sSL https://cdn.jsdelivr.net/gh/xihe41017/confession-wall@main/deploy/install.sh)"
+
+# 海外服务器
 bash -c "$(curl -sSL https://raw.githubusercontent.com/xihe41017/confession-wall/main/deploy/install.sh)"
 ```
 
@@ -61,7 +65,7 @@ bash -c "$(curl -sSL https://raw.githubusercontent.com/xihe41017/confession-wall
 
 ```bash
 # 自定义密码 / 域名（可选，不加则随机生成）
-ADMIN_PASSWORD='强密码' RADIO_ADMIN_PASSWORD='强密码' DOMAIN='你的域名' bash -c "$(curl -sSL ...)"
+ADMIN_PASSWORD='强密码' RADIO_ADMIN_PASSWORD='强密码' DOMAIN='你的域名' bash -c "$(curl -sSL https://cdn.jsdelivr.net/gh/xihe41017/confession-wall@main/deploy/install.sh)"
 ```
 
 部署完成后：

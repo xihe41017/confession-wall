@@ -2,7 +2,8 @@
 # ============================================================
 #  校园墙（表白墙）+ 广播站点歌系统  一键部署脚本
 #  用法（服务器上执行，需 root）：
-#    bash -c "$(curl -sSL https://raw.githubusercontent.com/xihe41017/confession-wall/main/deploy/install.sh)"
+#    国内：bash -c "$(curl -sSL https://cdn.jsdelivr.net/gh/xihe41017/confession-wall@main/deploy/install.sh)"
+#    海外：bash -c "$(curl -sSL https://raw.githubusercontent.com/xihe41017/confession-wall/main/deploy/install.sh)"
 #
 #  可选环境变量（提前 export 可覆盖默认值）：
 #    DOMAIN=你的域名        # 配置到 Nginx（可选，默认用 IP）
