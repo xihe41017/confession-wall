@@ -32,6 +32,7 @@ class Settings:
     # 自动更新（部署脚本会生成更新脚本；Windows 开发环境无此脚本则自动更新不可用）
     UPDATE_SCRIPT = os.getenv("UPDATE_SCRIPT", "/usr/local/bin/campus-confession-update.sh")
     UPDATE_STATE = os.getenv("UPDATE_STATE", "/var/log/campus-confession-update.state")
+    UPDATE_SERVICE = os.getenv("UPDATE_SERVICE", "campus-confession")
 
     # Nginx 域名解析（后台可配置；Windows 开发环境仅预览）
     NGINX_DOMAINS_FILE = os.getenv("NGINX_DOMAINS_FILE", "/etc/campus/confession-domains.json")
