@@ -22,6 +22,19 @@ def _state_path() -> str:
     return getattr(settings, "UPDATE_STATE", "/var/log/campus-update.state")
 
 
+def _write_state(updating: bool, result: str):
+    """同步写入状态文件（与更新脚本写入同一路径，前端 status() 读取）。"""
+    try:
+        st = _read_state()
+        last_run_at = st["last_run_at"] or time.time()
+        if not updating:
+            last_run_at = time.time()
+        with open(_state_path(), "w", encoding="utf-8") as f:
+            f.write(f"{'updating' if updating else 'ok'}|{last_run_at}|{result}")
+    except Exception:
+        pass
+
+
 def _read_state() -> dict:
     """从状态文件读取（更新脚本会写入，跨重启保留）。"""
     try:
@@ -38,6 +51,11 @@ def _read_state() -> dict:
 
 def status() -> dict:
     st = _read_state()
+    # 以内存态为准（刚点击时脚本尚未写文件），否则回退文件态
+    if _state["updating"]:
+        st = {"updating": True, "last_result": _state["last_result"], "last_run_at": _state["last_run_at"]}
+    elif _state["last_result"] and not st["last_run_at"]:
+        st = {"updating": False, "last_result": _state["last_result"], "last_run_at": _state["last_run_at"]}
     return {
         "script_exists": bool(_script_path()) and os.path.exists(_script_path()),
         "updating": st["updating"],
@@ -60,16 +78,18 @@ def trigger() -> str:
     with _lock:
         _state["updating"] = True
         _state["last_run_at"] = time.time()
+        _state["last_result"] = "已启动更新"
+    _write_state(True, "已启动更新")
     try:
         log = _state_path().replace(".state", ".log")
         # setsid 分离进程：服务重启不影响本次更新
         subprocess.Popen(f"setsid nohup {path} >> {log} 2>&1 &", shell=True)
-        _state["last_result"] = "已启动更新"
         return "已启动更新"
     except Exception as e:
         with _lock:
             _state["updating"] = False
         _state["last_result"] = f"启动失败：{e}"
+        _write_state(False, f"启动失败：{e}")
         return _state["last_result"]
 
 
