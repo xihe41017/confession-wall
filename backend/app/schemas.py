@@ -294,3 +294,27 @@ class SiteInfo(BaseModel):
     anonymous_post_limit: int
     image_max_mb: int = 2
     video_max_mb: int = 15
+
+
+# ---------- Nginx 域名解析（仅超管） ----------
+class NginxDomainIn(BaseModel):
+    domain: str = Field(..., max_length=253)
+    ssl_cert: str = Field("", max_length=500)
+    ssl_key: str = Field("", max_length=500)
+
+
+class NginxDomainOut(BaseModel):
+    domain: str
+    ssl_cert: str = ""
+    ssl_key: str = ""
+
+
+class NginxStatusOut(BaseModel):
+    is_server: bool = False
+    nginx_installed: bool = False
+    nginx_active: bool = False
+    port: int = 8000
+    domains_file: str = ""
+    conf_file: str = ""
+    domains: List[NginxDomainOut] = []
+    preview: str = ""

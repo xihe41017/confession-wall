@@ -13,7 +13,7 @@ from app.database import Base, SessionLocal, engine, run_migrations
 from app.middleware import RequestBodyLimitMiddleware
 from app.models import Setting, User  # noqa: F401  确保建表前已加载模型
 from app.ratelimit import limiter
-from app.routers import admin, auth, comments, media, posts, settings_admin, site, users
+from app.routers import admin, auth, comments, media, nginx, posts, settings_admin, site, users
 from app.routers.auto_update import router as auto_update_router
 
 # 上传目录（图片/视频）
@@ -86,6 +86,7 @@ app.include_router(media.router)
 app.include_router(admin.router)
 app.include_router(users.router)
 app.include_router(settings_admin.router)
+app.include_router(nginx.router)
 app.include_router(auto_update_router)
 
 # 上传文件静态托管

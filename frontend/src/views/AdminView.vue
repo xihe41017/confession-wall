@@ -1,9 +1,10 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { auth, logout, hasPerm } from '../store/auth'
+import { auth, logout, hasPerm, isSuperAdmin } from '../store/auth'
 import { roleLabel } from '../utils'
 import ContentTab from '../components/admin/ContentTab.vue'
+import NginxTab from '../components/admin/NginxTab.vue'
 import UsersTab from '../components/admin/UsersTab.vue'
 import BannedTab from '../components/admin/BannedTab.vue'
 import SettingsTab from '../components/admin/SettingsTab.vue'
@@ -16,6 +17,7 @@ const TABS = [
   { key: 'users', label: '账号管理', show: () => hasPerm('users.manage') },
   { key: 'banned', label: 'IP黑名单', show: () => hasPerm('ban.manage') },
   { key: 'settings', label: '服务器设置', show: () => hasPerm('settings.view') },
+  { key: 'nginx', label: '域名解析', show: () => isSuperAdmin() },
 ]
 
 const visibleTabs = TABS.filter((t) => t.show())
@@ -67,6 +69,7 @@ onMounted(() => {
       <UsersTab v-else-if="tab === 'users'" />
       <BannedTab v-else-if="tab === 'banned'" />
       <SettingsTab v-else-if="tab === 'settings'" />
+      <NginxTab v-else-if="tab === 'nginx'" />
     </template>
     <div v-else class="empty">
       <div class="empty-emoji">⏳</div>
